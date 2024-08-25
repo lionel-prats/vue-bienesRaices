@@ -1,13 +1,16 @@
 <script setup>
     import { useForm, useField } from "vee-validate" // libreria vee-validate (v264)
     import {loginSchema as validationSchema} from "../validation/loginSchema" // v265
+    import { useAuthStore } from "../stores/auth" // v268
 
     const { handleSubmit } = useForm({validationSchema}) // libreria vee-validate (v264)
+    const auth = useAuthStore() // v268
+
     const email = useField("email") // libreria vee-validate (v264)
     const password = useField("password") // libreria vee-validate (v264)
 
-    const submit = handleSubmit(() => {
-        console.log("submit");
+    const submit = handleSubmit( (values) => {
+        auth.login(values)
     })
 </script>
 
@@ -18,12 +21,20 @@
         class="mx-auto my-10"  
     >
         <v-card-title
-        class="text-h4 font-weight-bold"
-        tag="h3"
+            class="text-h4 font-weight-bold"
+            tag="h3"
         >Iniciar Sesión</v-card-title>
         <v-card-subtitle class="text-h5">
             Inicia Sesión con tu cuenta
         </v-card-subtitle>
+
+        <v-alert
+            class="my-5"
+            type="error"
+            :title="auth.erroMsg"
+            v-if="auth.hasError"
+        ></v-alert>
+
         <v-form 
             class="mt-5" 
         >

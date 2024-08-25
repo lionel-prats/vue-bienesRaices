@@ -1,5 +1,3 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -17,6 +15,9 @@ import { firebaseApp } from "./config/firebase"
 
 import App from './App.vue'
 import router from './router'
+
+import './assets/main.css'
+import '@mdi/font/css/materialdesignicons.css' // hoja de estilos de Material Design Icons (v270)
 
 const app = createApp(App)
 
