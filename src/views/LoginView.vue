@@ -9,7 +9,7 @@
     import {loginSchema as validationSchema} from "../validation/loginSchema" 
 
     // importo el store que tendra toda la logica de autenticacion de usuarios (v268)
-    import { useAuthStore } from "../stores/auth" 
+    import { useAuthStore } from "@/stores/auth" 
 
     // obtengo el metodo handleSubmit() del composable useForm de la libreria vee-validate (v264)
     // al composable useForm() le paso las reglas de validacion definidas en v265 para que vee-validate realize la validacion
