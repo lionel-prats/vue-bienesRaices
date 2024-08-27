@@ -3,7 +3,7 @@ import { computed } from "vue"
 import { collection } from "firebase/firestore"; // v291
 
 // useFirestore es un composable de vuefire par interacruar con Firestore (la DB de Firebase) (291)
-// useCollection es otro composable de vuefire (291)
+// useCollection es otro composable de vuefire que usamos cuando queremos acceder a mas de un documento de una coleccion (291)
 import { useFirestore, useCollection } from "vuefire";
 
 export default function usePropiedades() {
