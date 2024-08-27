@@ -1,17 +1,17 @@
 <script setup>
-import { RouterView } from 'vue-router'
+  import { RouterView } from 'vue-router'
 
-import { useAuthStore } from "./stores/auth"
+  import { useAuthStore } from "./stores/auth"
 
-// la funcion storeToRefs() de Pinia permite aplicar destructuring a todo lo que sea reactivo de un store (ref, reactive y computed properties) (v275)
-import { storeToRefs } from "pinia"
+  // la funcion storeToRefs() de Pinia permite aplicar destructuring a todo lo que sea reactivo de un store (ref, reactive y computed properties) (v275)
+  import { storeToRefs } from "pinia"
 
-const auth = useAuthStore()
+  const auth = useAuthStore()
 
-// aplicamos destructuring para obtener el computed property isAuth (v275)
-const { isAuth } = storeToRefs(auth)
+  // aplicamos destructuring para obtener el computed property isAuth (v275)
+  const { isAuth } = storeToRefs(auth)
 
-const { logout } = auth
+  const { logout } = auth
 
 </script>
 
