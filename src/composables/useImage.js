@@ -12,21 +12,20 @@ export default function useImage() { // v285
     // conexion al servicio de Storage de Firebase (v285)
     const storage = useFirebaseStorage()
     
-    // esta variable va a contener la ubicacion de la imagen que vamos a subir
+    // esta variable va a contener el path en el storage de Firebase dond vamos a guardar fisicamente las imagenes que el usuario cargue en el form de crear propiedad
     const storageRefPath = storageRef(storage, `/propiedades/${uid()}.jpg`)
 
     const {
-        url,
+        url, // funcion para obtener la url de la imagen subida a Firebase, para accederla desde el navegador
         upload, // funcion para subir una imagen al storage de Firebase
     } = useStorageFile(storageRefPath)
 
     function uploadImage(e) {
         const data = e.target.files[0]
         if(data) {
-            // almaceno la imagen fisica en el storage de Firebase apenas el usuario la carga en el input del form (v286)
+            // con la funcion upload() de Firebase almaceno la imagen fisica en el storage de Firebase apenas el usuario la carga en el input del form (v286)
             upload(data) 
         }
-        console.log(url);
     }
 
     const image = computed( () => {
