@@ -39,7 +39,7 @@
     const propiedad = useDocument(docRef) // obtenemos el documento asociado al id de la URL
     // fin bloque
 
-    // bloque para cargar en los inputs del form de edicion los datos de la propiedad que se pretende editar, luego de obtener la respuesta de la API de Firebase y almacenarla en propiedad (v296)
+    // bloque para cargar en los inputs del form de edicion los datos de la propiedad que se pretende editar, apenas obtenemos la respuesta de la API de Firebase, y almacenarla en propiedad (v296)
     watch(propiedad, (propiedad) => {
         titulo.value.value = propiedad.titulo
         precio.value.value = propiedad.precio
