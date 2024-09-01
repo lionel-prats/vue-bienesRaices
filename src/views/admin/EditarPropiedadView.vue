@@ -66,7 +66,13 @@
         }
 
         // image es un computed property del composable useImage; si el usuario no carga una imagen nueva en el form de edicion, su valor sera null; si cargo imagen nueva, esta ya se almacenó en el storage de Firebase, y image contendrá la url para acceder a esta nueva imagen desde el navegador 
-        if(image.value) data.imagen = url.value
+        // entonces, si el usuario actualizo la iamgen de la propiedad, agrego la key imagen al objeto data, para actualizar el campo imagen en el registro en la DB
+        // a su vez, luego de ver el v307 donde Valdez explica como eliminar la imagen de una propiedad cuando esta se elimina de la DB, relizé una implementacion propia dentro de este if para eliminar la imagen anterior del storage cuando el usuario actualiza la imagen de una propiedadd en el form de edicion 
+        if(image.value) {
+
+            
+            data.imagen = url.value
+        }
 
         // hago la peticion para el UPDATE usando la funcion que nos proporciona Firebase para esta accion, pasandole la referencia al registro que queremos modificar y el objeto cuyas keys reescribiran las keys originales del registro en la DB
         await updateDoc(docRef, data)
