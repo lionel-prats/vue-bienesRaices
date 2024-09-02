@@ -1,6 +1,7 @@
 import { computed } from "vue"
 
-import { ref as storageRef } from "firebase/storage" // v285
+// con deleteObject voy a poder eliminar imagenes del storage 
+import { ref as storageRef, deleteObject } from "firebase/storage" // v285
 
 // el composable useFirebaseStorage sirve para que Firebese identifique que servicio vamos a utilizar y que conozca nuestras credenciales (v285)
 // el composable useStorageFile va a tener una serie de funciones que son muy utiles para trabajar con los archivos del storage de Firebase (funciones para subir esos archivos hacia el servidor)
@@ -28,13 +29,12 @@ export default function useImage() { // v285
         }
     }
 
-    // implementacion LIO parte#2 para eliminar uina imagen del Storage de Firebase (luego de ver la explicacion del v307)
-    // async function deleteImage(urlImage) {
-    //     const imageRef = storageRef(storage, urlImage);
-    //     await deleteObject(imageRef);
-    // }
-    // fin implementacion LIO parte #2
-
+    // implementacion LIO para eliminar una imagen del Storage de Firebase (luego de ver la explicacion del v307)
+    async function deleteImage(urlImage) {
+        const imageRef = storageRef(storage, urlImage); // referencia hacia la imagen recibida como parametro, que eliminaremos del storage de Firebase (v307)
+        await deleteObject(imageRef); // elimino la imagen del storage
+    }
+    // fin implementacion LIO
 
     const image = computed( () => {
         return url.value ? url.value : null
@@ -44,6 +44,6 @@ export default function useImage() { // v285
         url,
         uploadImage,
         image,
-        // deleteImage, // implementacion LIO parte#3
+        deleteImage, // implementacion LIO
     }
 }

@@ -32,22 +32,22 @@ const router = createRouter({
       meta: { requiresAuth: true }, // Route Meta Field (v277)
       children: [ // rutas anidadas (v273)
         {
-          path: '/admin/propiedades',
+          path: 'propiedades', // == '/admin/propiedades' (v308)
           name: 'admin-propiedades',
           component: () => import("../views/admin/AdminView.vue"),
-          meta: { requiresAuth: true }, // Route Meta Field (v277)
+          // meta: { requiresAuth: true }, // Route Meta Field (v277)
         },
         {
-          path: '/admin/nueva',
+          path: 'nueva', // == '/admin/nueva' (v308)
           name: 'nueva-propiedad',
           component: () => import("../views/admin/NuevaPropiedadView.vue"),
-          meta: { requiresAuth: true }, // Route Meta Field (v277)
+          // meta: { requiresAuth: true }, // Route Meta Field (v277)
         },
         {
-          path: '/admin/editar/:id',
+          path: 'editar/:id', // == '/admin/editar/:id' (v308)
           name: 'editar-propiedad',
           component: () => import("../views/admin/EditarPropiedadView.vue"),
-          meta: { requiresAuth: true }, // Route Meta Field (v277)
+          // meta: { requiresAuth: true }, // Route Meta Field (v277)
         },
       ]
     },
@@ -58,7 +58,7 @@ const router = createRouter({
 // este codigo se va a ejecutar cada vez que se quiera acceder a cualquiera de las URLs definidas en este archivo
 router.beforeEach( async(to, from, next) => {
   // to = Objeto -> info de a que URL estoy queriendo acceder
-  // from = Objeto -> info de desde que URL esqoy queriendo acceder
+  // from = Objeto -> info de desde que URL estoy queriendo acceder
   // next = ?
   const requiresAuth = to.matched.some( (url) => url.meta.requiresAuth )
   if(requiresAuth) {
@@ -85,7 +85,6 @@ function authenticateUser() { // v278
       } else {
         rejected() // retornamos que NO existe sesion de usuario autenticado
       }
-
     }) 
   })
 }

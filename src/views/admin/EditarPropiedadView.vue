@@ -1,6 +1,6 @@
 <script setup>
 
-    import { watch } from "vue"
+    import { watch, ref } from "vue"
 
     import { useRoute, useRouter } from "vue-router"
     // useFirestore es un composable de vuefire par interacruar con Firestore (la DB de Firebase) (294)
@@ -18,7 +18,9 @@
     import useLocationMap from '@/composables/useLocationMap'
     import { validationSchema } from '@/validation/propiedadSchema'
     const items = [1,2,3,4,5]
-    const { url, uploadImage, image } = useImage()
+
+    const { url, uploadImage, image, deleteImage } = useImage()
+    
     const { zoom, center, pin } = useLocationMap()
     const { handleSubmit } = useForm({ validationSchema })
     const titulo = useField('titulo')
@@ -39,6 +41,9 @@
     const propiedad = useDocument(docRef) // obtenemos el documento asociado al id de la URL
     // fin bloque
 
+    // state para almacenar el path de la imagen anterior de una propiedad a editar, para que si el usuario actualiza la imagen, pueda eliminar la anterior del storage
+    const imagenAnterior = ref(null);
+
     // bloque para cargar en los inputs del form de edicion los datos de la propiedad que se pretende editar, apenas obtenemos la respuesta de la API de Firebase, y almacenarla en propiedad (v296)
     watch(propiedad, (propiedad) => {
         titulo.value.value = propiedad.titulo
@@ -49,6 +54,8 @@
         descripcion.value.value = propiedad.descripcion
         alberca.value.value = propiedad.alberca
         center.value = propiedad.ubicacion
+
+        imagenAnterior.value = propiedad.imagen // almaceno el path a la imagen anterior en el sotrage
     })
     // fin bloque
 
@@ -67,10 +74,9 @@
 
         // image es un computed property del composable useImage; si el usuario no carga una imagen nueva en el form de edicion, su valor sera null; si cargo imagen nueva, esta ya se almacenó en el storage de Firebase, y image contendrá la url para acceder a esta nueva imagen desde el navegador 
         // entonces, si el usuario actualizo la iamgen de la propiedad, agrego la key imagen al objeto data, para actualizar el campo imagen en el registro en la DB
-        // a su vez, luego de ver el v307 donde Valdez explica como eliminar la imagen de una propiedad cuando esta se elimina de la DB, relizé una implementacion propia dentro de este if para eliminar la imagen anterior del storage cuando el usuario actualiza la imagen de una propiedadd en el form de edicion 
+        // a su vez, luego de ver el v307 donde Valdez explica como eliminar la imagen de una propiedad cuando esta se elimina de la DB, realizé una implementacion propia dentro de este if para mandar llamar la funcion deleteImage() (definida en el composable useImage), a la que le paso el path a la imagen anterior en el sotrage, para que esta funcion la elimine del storage cuando el usuario actualiza la imagen de una propiedadd y submitea el form de edicion 
         if(image.value) {
-
-            
+            deleteImage(imagenAnterior.value)
             data.imagen = url.value
         }
 
